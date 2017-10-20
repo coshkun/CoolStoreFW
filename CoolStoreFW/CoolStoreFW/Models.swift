@@ -27,8 +27,21 @@ class ProductCategory: NSObject {
         sampleBook.price = NSNumber(float: 8.99)
         prd.append(sampleBook)
         
+        let bestNewGamesCategory = ProductCategory()
+        bestNewGamesCategory.name = "Best New Games"
+        
+        var gms = [Product]()
+        
+        let telePaint = Product()
+        telePaint.name = "Telepaint"
+        telePaint.category = "Games"
+        telePaint.imageName = "telepaint"
+        telePaint.price = NSNumber(float: 2.99)
+        gms.append(telePaint)
+        
+        bestNewGamesCategory.products = gms
         bestNewBooksCategory.products = prd
-        return [bestNewBooksCategory]
+        return [bestNewBooksCategory, bestNewGamesCategory]
     }
 }
 

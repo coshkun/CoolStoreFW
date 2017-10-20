@@ -13,6 +13,14 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     private let cellId = "ProductCellId"
     
+    var productCategory: ProductCategory? {
+        didSet {
+            if let name = productCategory?.name {
+                nameLabel.text = name
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -72,11 +80,15 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if let count = productCategory?.products?.count{
+            return count
+        }
+        return 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! ProductCell
+        cell.product = productCategory?.products?[indexPath.row]
         return cell
     }
     
@@ -91,6 +103,25 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
 
 class ProductCell: UICollectionViewCell {
     
+    var product: Product? {
+        didSet {
+            if let prod = product {
+                nameLabel.text = prod.name
+                categoryLabel.text = prod.category
+            }
+            
+            if let price = product?.price {
+                priceLabel.text = "$\(price)"
+            } else {
+                priceLabel.text = ""
+            }
+            
+            if let imageName = product?.imageName {
+                imageView.image = UIImage(named: imageName)
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -102,7 +133,7 @@ class ProductCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "cool-bookmarks")!
+        //iv.image = UIImage(named: "cool-bookmarks")!   //Some default place-holder goes here
         
         iv.contentMode = .ScaleAspectFill
         iv.layer.cornerRadius = 16
