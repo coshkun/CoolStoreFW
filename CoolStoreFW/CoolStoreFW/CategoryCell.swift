@@ -18,6 +18,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
             if let name = productCategory?.name {
                 nameLabel.text = name
             }
+            productCollectionView.reloadData()
         }
     }
 
@@ -106,6 +107,10 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 14, 0, 14)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
     }
 }
 

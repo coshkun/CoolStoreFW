@@ -8,6 +8,51 @@
 
 import UIKit
 
+class FeaturedProducts: NSObject {
+    
+    var bannerCategory: BannerCategory?
+    var productCategories: [ProductCategory]?
+    
+    override func setValue(value: AnyObject?, forKey key: String) {
+        if key == "categories" {
+            
+            productCategories = [ProductCategory]()
+            
+            for dict in value as! [[String:AnyObject]] {
+                let newCategory = ProductCategory()
+                newCategory.setValuesForKeysWithDictionary(dict)
+                
+                productCategories!.append(newCategory)
+            }
+        } else if key == "banners" {
+            if let val = value {
+                bannerCategory = BannerCategory()
+                bannerCategory?.setValuesForKeysWithDictionary([key : val])
+            }
+        } else {
+            super.setValue(value, forKey: key)
+        }
+    }
+}
+
+class BannerCategory: ProductCategory {
+    //var banners: [Product]?
+    
+    override func setValue(value: AnyObject?, forKey key: String) {
+        if key == "banners" {
+            
+            products = [Product]()
+            for dict in value as! [[String:AnyObject]] {
+                let newProduct = Product()
+                newProduct.setValuesForKeysWithDictionary(dict)
+                products!.append(newProduct)
+            }
+        } else {
+            super.setValue(value, forKey: key)
+        }
+    }
+}
+
 class ProductCategory: NSObject {
     
     var id: NSNumber?
@@ -30,7 +75,7 @@ class ProductCategory: NSObject {
         }
     }
     
-    static func fetchFeaturedProducts(completionHandler: ([ProductCategory]) -> ()){
+    static func fetchFeaturedProducts(completionHandler: (FeaturedProducts) -> ()){
         
         let urlString = "http://www.json-generator.com/api/json/get/bTOZldebhe?indent=2"
         
@@ -49,6 +94,12 @@ class ProductCategory: NSObject {
                 do {
                     let json = try(NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers))
                     
+                    // ---
+                    let featuredProds = FeaturedProducts()
+                    featuredProds.setValuesForKeysWithDictionary(json as! [String:AnyObject])
+                    // ---
+                    
+                    /*
                     var productCategories = [ProductCategory]()
                     
                     for dict in json["categories"] as! [[String:AnyObject]] {
@@ -57,9 +108,11 @@ class ProductCategory: NSObject {
                         
                         productCategories.append(newCategory)
                     }
+                    */
+                    
                     // print(productCategories) // - Debug
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        completionHandler(productCategories)
+                        completionHandler(featuredProds)
                     })
                     
                 } catch let err {
