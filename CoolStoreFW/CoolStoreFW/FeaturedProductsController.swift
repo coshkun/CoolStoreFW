@@ -17,17 +17,33 @@ class FeaturedProductsController: UICollectionViewController, UICollectionViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        productCategories = ProductCategory.sampleProducts()
+        //productCategories = ProductCategory.sampleProducts()
+        
+        ProductCategory.fetchFeaturedProducts { (fetchedCategories) -> () in
+            self.productCategories = fetchedCategories
+            self.collectionView!.reloadData()
+            /* //delayed refresh
+            dispatch_after(UInt64(0.25), dispatch_get_main_queue()) {
+            self.collectionView!.reloadData()
+            } */
+        }
         
         collectionView?.backgroundColor = UIColor.whiteColor()  // - Debug
         
         collectionView?.registerClass(CategoryCell.self, forCellWithReuseIdentifier: cellId)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! CategoryCell
         
-        cell.productCategory = productCategories![indexPath.row]
+        
+        cell.productCategory = productCategories![indexPath.item]
+        cell.categoryIndexCount = productCategories![indexPath.item].products!.count
         return cell
     }
     

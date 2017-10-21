@@ -20,6 +20,12 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
             }
         }
     }
+
+    var categoryIndexCount:Int!{
+        didSet{
+            productCollectionView.reloadData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,7 +86,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = productCategory?.products?.count{
+        if let count = categoryIndexCount {
             return count
         }
         return 0
@@ -88,7 +94,9 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! ProductCell
-        cell.product = productCategory?.products?[indexPath.row]
+        
+        cell.product = productCategory?.products?[indexPath.item]
+        
         return cell
     }
     
@@ -105,13 +113,28 @@ class ProductCell: UICollectionViewCell {
     
     var product: Product? {
         didSet {
-            if let prod = product {
-                nameLabel.text = prod.name
-                categoryLabel.text = prod.category
+            if let name = product?.name {
+                nameLabel.text = name
+                
+                let rec = NSString(string: name).boundingRectWithSize(CGSizeMake(frame.width, 1000), options: NSStringDrawingOptions.UsesFontLeading.union(NSStringDrawingOptions.UsesLineFragmentOrigin), attributes: [NSFontAttributeName:UIFont.systemFontOfSize(12)], context: nil)
+                
+                if rec.height > 20 {
+                    // 2 lines
+                    categoryLabel.frame = CGRectMake(0, frame.width + 32, frame.width, 20)
+                    priceLabel.frame = CGRectMake(0, frame.width + 50, frame.width, 20)
+                } else {
+                    // singel line
+                    categoryLabel.frame = CGRectMake(0, frame.width + 18, frame.width, 20)
+                    priceLabel.frame = CGRectMake(0, frame.width + 36, frame.width, 20)
+                }
+                nameLabel.frame = CGRectMake(0, frame.width + 5, frame.width, 40)
+                nameLabel.sizeToFit()
             }
             
+            categoryLabel.text = product?.category
+            
             if let price = product?.price {
-                priceLabel.text = "$\(price)"
+                priceLabel.text = "$\(price.floatValue)"
             } else {
                 priceLabel.text = ""
             }
