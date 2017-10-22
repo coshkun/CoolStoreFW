@@ -42,15 +42,17 @@ class FeaturedProductsController: UICollectionViewController, UICollectionViewDe
         collectionView?.registerClass(Header.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    
+    // MARK: - DetailViewController Caller Func
+    func showProductDetailsForProduct(product: Product) {
+        let layout = UICollectionViewFlowLayout()
+        let productDetailController = ProductDetailsController(collectionViewLayout: layout)
+        productDetailController.product = product
+        navigationController?.pushViewController(productDetailController, animated: true)
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-    }
     
+    // MARK: - CollectionView Datasource
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         // Just 3rd Cell Will Be the Large One
         if indexPath.item == 2 {
@@ -58,6 +60,7 @@ class FeaturedProductsController: UICollectionViewController, UICollectionViewDe
             
             cell.productCategory = productCategories![indexPath.item]
             cell.categoryIndexCount = productCategories![indexPath.item].products!.count
+            cell.featuredProductsController = self
             return cell
         }
         // Every Cell in Collection
@@ -65,6 +68,7 @@ class FeaturedProductsController: UICollectionViewController, UICollectionViewDe
             
         cell.productCategory = productCategories![indexPath.item]
         cell.categoryIndexCount = productCategories![indexPath.item].products!.count
+        cell.featuredProductsController = self
         return cell
     }
     
@@ -84,6 +88,7 @@ class FeaturedProductsController: UICollectionViewController, UICollectionViewDe
         return CGSizeMake(view.frame.width, 230)
     }
     
+    // MARK: - Header Banner Datasource
     // folowing delegate injects to header section of collectionView
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
@@ -100,7 +105,7 @@ class FeaturedProductsController: UICollectionViewController, UICollectionViewDe
     }
 }
 
-
+// MARK: - Header Class
 class Header:CategoryCell {
     
     private let bannerCellId = "BannerCellId"
@@ -155,7 +160,7 @@ class Header:CategoryCell {
 
 
 
-
+// MARK: - Large Category Cell Class (on 3.rd row of CV)
 class LargeCategoryCell: CategoryCell {
     
     private let largeProductCellId = "LargeProductCellId"

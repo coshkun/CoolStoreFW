@@ -11,6 +11,8 @@ import UIKit
 
 class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    weak var featuredProductsController: FeaturedProductsController?
+    
     private let cellId = "ProductCellId"
     
     var productCategory: ProductCategory? {
@@ -110,7 +112,10 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        if let product = productCategory?.products?[indexPath.item] {
+            featuredProductsController?.showProductDetailsForProduct(product)
+        }
+        //print("Product Selected")
     }
 }
 

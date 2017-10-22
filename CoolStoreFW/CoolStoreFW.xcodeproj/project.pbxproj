@@ -14,6 +14,7 @@
 		D577CB501F9820040042ACB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D577CB4E1F9820040042ACB9 /* Main.storyboard */; };
 		D577CB521F9820040042ACB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D577CB511F9820040042ACB9 /* Assets.xcassets */; };
 		D577CB551F9820040042ACB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D577CB531F9820040042ACB9 /* LaunchScreen.storyboard */; };
+		D5A7E42B1F9C0B420016A4E0 /* ProductDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A7E42A1F9C0B420016A4E0 /* ProductDetailsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		D577CB511F9820040042ACB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D577CB541F9820040042ACB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D577CB561F9820040042ACB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5A7E42A1F9C0B420016A4E0 /* ProductDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				D577CB561F9820040042ACB9 /* Info.plist */,
 				D53C17D11F98998C00C8D164 /* CategoryCell.swift */,
 				D53C17D31F993A5100C8D164 /* Models.swift */,
+				D5A7E42A1F9C0B420016A4E0 /* ProductDetailsController.swift */,
 			);
 			path = CoolStoreFW;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D577CB4D1F9820040042ACB9 /* FeaturedProductsController.swift in Sources */,
+				D5A7E42B1F9C0B420016A4E0 /* ProductDetailsController.swift in Sources */,
 				D577CB4B1F9820040042ACB9 /* AppDelegate.swift in Sources */,
 				D53C17D21F98998C00C8D164 /* CategoryCell.swift in Sources */,
 				D53C17D41F993A5100C8D164 /* Models.swift in Sources */,
